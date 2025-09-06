@@ -1,13 +1,13 @@
-/* Reset + fonts */
+/* Reset */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Orbitron', sans-serif; background: #0a0a0a; overflow: hidden; color: #fff; }
+body { font-family: Arial, sans-serif; background: #0a0a0a; color: #fff; overflow: hidden; }
 
-/* Background gradient animated */
+/* Background overlay */
 .overlay {
   position: fixed; inset: 0;
   background: linear-gradient(270deg,#0a0a0a,#1a1a1a,#0f0f0f);
   background-size: 600% 600%;
-  animation: gradient 20s ease infinite;
+  animation: gradient 15s ease infinite;
   z-index: -2;
 }
 @keyframes gradient {
@@ -15,56 +15,23 @@ body { font-family: 'Orbitron', sans-serif; background: #0a0a0a; overflow: hidde
   50% { background-position: 100% 50%; }
 }
 
-/* Logo glitch neon */
+/* Logo */
 .logo {
   font-size: 3rem;
   margin-bottom: 1rem;
-  color: #fff;
-  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-  position: relative;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
 }
 .logo span { color: #ff00ff; }
 
-.glitch::before, .glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  text-shadow: -2px 0 red;
-  top: 0;
-  color: white;
-  background: transparent;
-  overflow: hidden;
-  clip: rect(0, 900px, 0, 0);
-}
-.glitch::after {
-  text-shadow: -2px 0 blue;
-  animation: glitch 2s infinite linear alternate-reverse;
-}
-@keyframes glitch {
-  0% { clip: rect(42px,9999px,44px,0); }
-  20% { clip: rect(12px,9999px,14px,0); }
-  40% { clip: rect(52px,9999px,54px,0); }
-  60% { clip: rect(32px,9999px,34px,0); }
-  80% { clip: rect(72px,9999px,74px,0); }
-  100% { clip: rect(22px,9999px,24px,0); }
-}
-
-/* Subtitle typing effect */
-.typing {
+/* Subtitle */
+.subtitle {
   font-size: 1.2rem;
   color: #bbb;
-  border-right: 2px solid #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 0;
-  animation: typing 5s steps(40, end) forwards, blink 1s step-end infinite;
+  margin-bottom: 2rem;
 }
-@keyframes typing { to { width: 100%; } }
-@keyframes blink { 50% { border-color: transparent; } }
 
 /* Buttons */
 .buttons {
-  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -85,24 +52,23 @@ body { font-family: 'Orbitron', sans-serif; background: #0a0a0a; overflow: hidde
 .btn:hover {
   transform: scale(1.1);
   background: #2a2a2a;
-  box-shadow: 0 0 20px #0ff, 0 0 30px #00f;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #00f;
 }
-.btn i { margin-right: 0.5rem; }
 
-/* Main button special */
+/* Main button */
 .btn.main {
   margin-top: 1.5rem;
   background: linear-gradient(90deg,#00f,#0ff);
-  box-shadow: 0 0 25px #0ff, 0 0 50px #00f;
   font-size: 1.2rem;
   font-weight: bold;
+  box-shadow: 0 0 25px #0ff, 0 0 50px #00f;
 }
 .btn.main:hover {
   background: linear-gradient(90deg,#ff00ff,#0ff);
   box-shadow: 0 0 40px #ff00ff, 0 0 80px #0ff;
 }
 
-/* Fade-in animation */
+/* Fade-in */
 .fade-in { animation: fade 2s ease forwards; opacity: 0; }
 @keyframes fade { to { opacity: 1; } }
 
