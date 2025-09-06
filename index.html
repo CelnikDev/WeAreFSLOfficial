@@ -5,12 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WeAreFSL</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      cursor: none; /* Ukrywamy normalny kursor */
-    }
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
     body {
       font-family: Arial, sans-serif;
       background: #0d0d0d;
@@ -19,22 +15,56 @@
       overflow-x: hidden;
     }
 
-    /* CUSTOM CURSOR */
+    /* LOADER */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      transition: opacity 0.5s ease;
+    }
+    .spinner {
+      border: 5px solid #222;
+      border-top: 5px solid #00ffff;
+      border-radius: 50%;
+      width: 60px; height: 60px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Custom cursor */
     .cursor {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 25px;
-      height: 25px;
+      top: 0; left: 0;
+      width: 25px; height: 25px;
       border: 2px solid #00ffff;
       border-radius: 50%;
       pointer-events: none;
       transform: translate(-50%, -50%);
-      transition: transform 0.1s ease;
       z-index: 9999;
+      mix-blend-mode: difference;
+    }
+    .trail {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: #00ffff;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.6;
+      animation: fadeOut 0.5s forwards;
+      z-index: 9998;
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; transform: scale(0.5); }
     }
 
-    /* HEADER */
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -44,133 +74,109 @@
       position: sticky;
       top: 0;
       z-index: 1000;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInDown 1s ease forwards;
+      animation-delay: 0.5s;
     }
-    header h1 {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
+    header h1 { font-size: 1.5rem; font-weight: bold; }
     nav a {
-      color: #ccc;
-      text-decoration: none;
-      margin-left: 20px;
-      transition: color 0.3s;
+      color: #ccc; text-decoration: none;
+      margin-left: 20px; transition: color 0.3s;
     }
-    nav a:hover {
-      color: #fff;
-    }
+    nav a:hover { color: #fff; }
 
-    /* HERO */
+    /* Hero */
     .hero {
       text-align: center;
       padding: 100px 20px 60px;
       background: linear-gradient(to bottom, #111, #0d0d0d);
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+      animation-delay: 1s;
     }
-    .hero h2 {
-      font-size: 3rem;
-      margin-bottom: 15px;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      color: #aaa;
-      margin-bottom: 30px;
-    }
+    .hero h2 { font-size: 3rem; margin-bottom: 15px; }
+    .hero p { font-size: 1.2rem; color: #aaa; margin-bottom: 30px; }
     .btn {
-      background: #fff;
-      color: #000;
-      padding: 12px 30px;
-      border-radius: 25px;
-      font-weight: bold;
-      text-decoration: none;
+      background: #fff; color: #000;
+      padding: 12px 30px; border-radius: 25px;
+      font-weight: bold; text-decoration: none;
       transition: transform 0.3s, background 0.3s;
       display: inline-block;
     }
-    .btn:hover {
-      transform: scale(1.05);
-      background: #ddd;
-    }
+    .btn:hover { transform: scale(1.05); background: #ddd; }
 
-    /* FEATURES */
+    /* Features */
     .features {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 60px 20px;
+      display: flex; justify-content: center;
+      gap: 30px; padding: 60px 20px;
       flex-wrap: wrap;
     }
     .card {
       background: #1a1a1a;
-      padding: 30px;
-      border-radius: 12px;
-      width: 280px;
-      text-align: center;
+      padding: 30px; border-radius: 12px;
+      width: 280px; text-align: center;
       transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 1s ease forwards;
     }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-    }
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 1.3rem;
-    }
-    .card p {
-      font-size: 0.95rem;
-      color: #aaa;
-    }
+    .card:nth-child(1){ animation-delay: 1.2s; }
+    .card:nth-child(2){ animation-delay: 1.4s; }
+    .card:nth-child(3){ animation-delay: 1.6s; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+    .card h3 { margin-bottom: 10px; font-size: 1.3rem; }
+    .card p { font-size: 0.95rem; color: #aaa; }
 
-    /* ABOUT */
+    /* About */
     .about {
-      padding: 80px 20px;
-      text-align: center;
-      background: #111;
+      padding: 80px 20px; text-align: center; background: #111;
+      opacity: 0; animation: fadeIn 1s ease forwards; animation-delay: 1.8s;
     }
-    .about h2 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-    }
-    .about p {
-      max-width: 800px;
-      margin: 0 auto;
-      color: #bbb;
-      font-size: 1.1rem;
-    }
+    .about h2 { font-size: 2.2rem; margin-bottom: 20px; }
+    .about p { max-width: 800px; margin: 0 auto; color: #bbb; font-size: 1.1rem; }
 
-    /* DISCORD WIDGET */
+    /* Discord Community */
     .discord {
-      padding: 80px 20px;
-      text-align: center;
+      padding: 80px 20px; text-align: center;
+      opacity: 0; animation: fadeIn 1s ease forwards; animation-delay: 2s;
     }
-    .discord h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
+    .discord h2 { font-size: 2rem; margin-bottom: 20px; }
+    .members {
+      display: flex; flex-wrap: wrap; gap: 15px;
+      justify-content: center; margin-top: 20px;
     }
-    .discord iframe {
-      border: none;
-      border-radius: 12px;
+    .member {
+      background: #1a1a1a; padding: 10px 15px;
+      border-radius: 8px; display: flex; align-items: center;
+      gap: 10px; min-width: 160px;
+    }
+    .member img {
+      width: 32px; height: 32px; border-radius: 50%;
     }
 
-    /* FOOTER */
+    /* Footer */
     footer {
-      text-align: center;
-      padding: 30px 20px;
-      background: #0b0b0b;
-      color: #666;
-      font-size: 0.9rem;
+      text-align: center; padding: 30px 20px;
+      background: #0b0b0b; color: #666; font-size: 0.9rem;
+      margin-top: 50px;
     }
+
+    /* Animations */
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { to { opacity: 1; transform: translateY(0); } }
 
     @media(max-width: 768px) {
-      .features {
-        flex-direction: column;
-        align-items: center;
-      }
-      .card {
-        width: 90%;
-      }
+      .features { flex-direction: column; align-items: center; }
+      .card { width: 90%; }
     }
   </style>
 </head>
 <body>
-  <!-- Custom Cursor -->
+  <!-- Loader -->
+  <div id="loader"><div class="spinner"></div></div>
+
+  <!-- Cursor -->
   <div class="cursor" id="cursor"></div>
 
   <!-- HEADER -->
@@ -215,11 +221,11 @@
     </p>
   </section>
 
-  <!-- DISCORD WIDGET -->
+  <!-- DISCORD COMMUNITY -->
   <section class="discord" id="community">
     <h2>Community</h2>
-    <p>See who is online on our Discord server:</p>
-    <iframe src="https://discord.com/widget?id=1407757559292755988&theme=dark" width="350" height="500" allowtransparency="true"></iframe>
+    <p>Currently online on our Discord server:</p>
+    <div class="members" id="members"></div>
   </section>
 
   <!-- FOOTER -->
@@ -228,12 +234,52 @@
   </footer>
 
   <script>
-    // Custom cursor logic
+    // Cursor effect
     const cursor = document.getElementById("cursor");
     document.addEventListener("mousemove", e => {
       cursor.style.top = e.clientY + "px";
       cursor.style.left = e.clientX + "px";
+      const trail = document.createElement("div");
+      trail.className = "trail";
+      trail.style.top = e.clientY + "px";
+      trail.style.left = e.clientX + "px";
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 500);
     });
+
+    // Loader logic
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      if (sessionStorage.getItem("visited")) {
+        loader.style.display = "none";
+      } else {
+        setTimeout(() => {
+          loader.style.opacity = "0";
+          setTimeout(() => loader.style.display = "none", 500);
+        }, 1500); // loader visible for 1.5s
+        sessionStorage.setItem("visited", "true");
+      }
+    });
+
+    // Fetch Discord members
+    fetch("https://discord.com/api/guilds/1407757559292755988/widget.json")
+      .then(res => res.json())
+      .then(data => {
+        const membersDiv = document.getElementById("members");
+        if (data && data.members) {
+          data.members.forEach(m => {
+            const el = document.createElement("div");
+            el.className = "member";
+            el.innerHTML = `<img src="${m.avatar_url}" alt=""> <span>${m.username}</span>`;
+            membersDiv.appendChild(el);
+          });
+        } else {
+          membersDiv.innerHTML = "<p>Widget is disabled. Enable it in Discord server settings.</p>";
+        }
+      })
+      .catch(() => {
+        document.getElementById("members").innerHTML = "<p>Could not load members.</p>";
+      });
   </script>
 </body>
 </html>
