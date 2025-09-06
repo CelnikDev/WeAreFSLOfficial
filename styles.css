@@ -1,0 +1,57 @@
+/* 1. Reset + fonts */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Orbitron', sans-serif; overflow: hidden; background: #0a0a0a; }
+
+/* 2. Animated gradient background */
+.overlay {
+  position: fixed; inset: 0;
+  background: linear-gradient(270deg,#1a1a2e,#16213e,#0f3460,#533483);
+  background-size: 800% 800%;
+  animation: gradient 15s ease infinite;
+  z-index: -2;
+}
+@keyframes gradient { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+/* 3. Logo neon */
+.logo {
+  font-size: 3rem;
+  color: #fff;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+  animation: flicker 2s infinite;
+}
+.logo span { color: #ff00ff; }
+@keyframes flicker {
+  0%,19%,21%,23%,25%,54%,56%,100% { opacity: 1; }
+  20%,24%,55% { opacity: 0.5; }
+}
+
+/* 4. Button glow */
+.btn-glow {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  font-size: 1.2rem;
+  color: #fff;
+  background: linear-gradient(90deg,#00f,#0ff);
+  box-shadow: 0 0 20px #0ff, 0 0 40px #00f;
+  transition: all 0.3s ease;
+}
+.btn-glow:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #0ff, 0 0 60px #00f, inset 0 0 20px #fff;
+}
+
+/* 5. Subtitle glow */
+.subtitle {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #ddd;
+  text-shadow: 0 0 5px #fff, 0 0 10px #0ff;
+}
+
+/* 6. Fade-in animation */
+.fade-in { animation: fade 2s ease forwards; opacity: 0; }
+@keyframes fade { to { opacity: 1; } }
+
+.container { text-align: center; position: relative; z-index: 2; top: 35vh; }
