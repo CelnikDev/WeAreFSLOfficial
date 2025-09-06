@@ -16,26 +16,17 @@
     color:#eaeaea;
     -webkit-font-smoothing:antialiased;
     overflow-y:auto;
-    -webkit-overflow-scrolling: touch;
   }
   @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
   /* PAGE LOADER (session-based) */
-  #pageLoader{
-    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-    background:#060606;z-index:3000;
-  }
-  .ring{
-    width:64px;height:64px;border-radius:50%;
-    border:6px solid rgba(255,255,255,0.06);
-    border-top-color:#00f0e0;animation:spin 0.9s linear infinite;
-    box-shadow:0 6px 30px rgba(0,240,224,0.08);
-  }
+  #pageLoader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#060606;z-index:3000}
+  .ring{width:64px;height:64px;border-radius:50%;border:6px solid rgba(255,255,255,0.06);border-top-color:#00f0e0;animation:spin 0.9s linear infinite;box-shadow:0 6px 30px rgba(0,240,224,0.08)}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* CUSTOM CURSOR: container + dot (dot receives styles for variants and hover) */
-  #cursor{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:4000;mix-blend-mode:normal}
-  .cursor-dot{position:absolute;left:0;top:0;transform:translate(-50%,-50%);transition:transform .12s ease,box-shadow .12s ease,background .12s ease;pointer-events:none}
+  /* CUSTOM CURSOR (outer follows pointer; inner dot static styling) */
+  #cursor{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:4000}
+  .cursor-dot{position:absolute;left:0;top:0;transform:translate(-50%,-50%);transition:transform .12s ease;pointer-events:none}
   .cursor-dot.glow{width:22px;height:22px;border-radius:50%;border:2px solid #00f0e0;box-shadow:0 0 12px #00f0e0,0 0 30px #00f0e0aa;background:transparent}
   .cursor-dot.crosshair{width:34px;height:34px}
   .cursor-dot.crosshair:before,.cursor-dot.crosshair:after{content:"";position:absolute;background:#00f0e0;mix-blend-mode:screen}
@@ -46,26 +37,12 @@
   .cursor-dot.pulse{width:20px;height:20px;border-radius:50%;background:rgba(0,240,224,0.12);box-shadow:0 0 18px rgba(0,240,224,0.18);animation:pulse 1s infinite alternate}
   @keyframes pulse{from{transform:scale(0.95)}to{transform:scale(1.15)}}
 
-  /* when hovering interactive items, cursor-dot gets 'hovered' class (move up + scale + stronger glow) */
-  .cursor-dot.hovered{transform:translate(-50%,-70%) scale(1.15);box-shadow:0 0 26px #00f0e0,0 0 48px #00f0e088;background:rgba(0,240,224,0.04)}
-
   /* HEADER: slight colored tabs + YouTube icon */
-  header{
-    display:flex;align-items:center;justify-content:space-between;padding:18px 36px;
-    background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);
-    backdrop-filter:blur(6px);
-    position:sticky;top:0;z-index:200;
-  }
+  header{display:flex;align-items:center;justify-content:space-between;padding:18px 36px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);backdrop-filter:blur(6px);position:sticky;top:0;z-index:200}
   .brand{font-weight:700;letter-spacing:0.6px;color:#fff}
   nav{display:flex;gap:10px;align-items:center}
-  nav a{
-    color:#cfd8dc;text-decoration:none;padding:8px 12px;border-radius:9px;font-weight:600;transition:all .14s;
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-    border:1px solid rgba(255,255,255,0.02);
-    display:inline-flex;align-items:center;gap:8px;
-  }
+  nav a{color:#cfd8dc;text-decoration:none;padding:8px 12px;border-radius:9px;font-weight:600;transition:all .14s;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02);display:inline-flex;align-items:center;gap:8px}
   nav a:hover{color:#fff;background:linear-gradient(180deg, rgba(0,240,224,0.03), rgba(0,240,224,0.01));transform:translateY(-2px)}
-  /* small youtube svg styling */
   .yt-icon{width:18px;height:18px;display:inline-block;vertical-align:middle;fill:#ff4444}
 
   .container{max-width:1100px;margin:0 auto;padding:28px}
@@ -77,14 +54,31 @@
   .cta{margin-top:22px;display:inline-flex;align-items:center;gap:12px;padding:12px 26px;border-radius:999px;background:linear-gradient(90deg,#00f0e0,#7b6bff);color:#071217;font-weight:800;box-shadow:0 8px 40px rgba(123,107,255,0.12);text-decoration:none;transition:transform .18s}
   .cta:hover{transform:translateY(-3px) scale(1.02)}
 
-  /* FEATURES (cards) */
+  /* FEATURES (cards) - NO translation shift on hover, only glow */
   .features{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:36px 0}
-  .card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:22px;border-radius:12px;width:260px;box-shadow:0 6px 30px rgba(0,0,0,0.6);transition:transform .18s,box-shadow .18s}
+  .card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:22px;border-radius:12px;width:260px;box-shadow:0 6px 30px rgba(0,0,0,0.6);transition:box-shadow .18s;overflow:visible;z-index:0}
   .card h3{font-size:18px;margin-bottom:8px}
   .card p{color:#a9b0b4;font-size:14px}
-  .card:hover{transform:translateY(-8px);box-shadow:0 18px 60px rgba(0,0,0,0.7)}
-  .card .tooltip{position:absolute;left:50%;transform:translateX(-50%) translateY(-6px);bottom:105%;background:#061316;border:1px solid rgba(0,240,224,0.06);padding:8px 12px;border-radius:8px;color:#bff7f4;font-size:13px;opacity:0;pointer-events:none;transition:opacity .12s,transform .12s}
+  .card .tooltip{position:absolute;left:50%;transform:translateX(-50%) translateY(-6px);bottom:105%;background:#061316;border:1px solid rgba(0,240,224,0.06);padding:8px 12px;border-radius:8px;color:#bff7f4;font-size:13px;opacity:0;pointer-events:none;transition:opacity .12s,transform .12s;z-index:2}
   .card.hovered .tooltip{opacity:1;transform:translateX(-50%) translateY(-12px)}
+
+  /* Glow only: ::before draws radial gradient at --glow-pos; opacity controlled by --glow-opacity */
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:12px;
+    pointer-events:none;
+    z-index:0;
+    opacity:var(--glow-visible,0);
+    transition:opacity .12s ease, background .08s linear;
+    background:
+      radial-gradient(circle at var(--glow-pos,50% 50%),
+        rgba(0,240,224,var(--glow-opacity,0.0)),
+        rgba(0,240,224,0.04) 25%,
+        transparent 60%);
+  }
+  .card.hovered{box-shadow:0 12px 50px rgba(0,240,224,0.06)}
 
   /* Launch overlay */
   #launchOverlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,7,0.7);z-index:2500;opacity:0;pointer-events:none;transition:opacity .25s}
@@ -93,8 +87,8 @@
   .launch-box .msg{font-weight:700;color:#dffafa}
   .launch-box .sub{color:#9fb0b3;font-size:13px}
 
-  /* COMMUNITY - moved lower but slightly visible */
-  .spacer { height: 220px; } /* reduced height so community top peeks in */
+  /* COMMUNITY */
+  .spacer { height: 220px; }
   .community{padding:40px 16px;background:linear-gradient(180deg,transparent,rgba(255,255,255,0.01));opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
   .community.visible{opacity:1;transform:translateY(0)}
   .community-inner{max-width:900px;margin:0 auto}
@@ -102,6 +96,14 @@
   .comm-head h2{font-size:20px}
   .iframe-wrap{margin-top:18px;display:flex;justify-content:center}
   .iframe-wrap iframe{border-radius:10px;overflow:hidden;border:0;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+
+  /* pulse highlight that runs when nav clicked */
+  .community.pulse-highlight{animation:pulseGlow 1s ease}
+  @keyframes pulseGlow{
+    0% { box-shadow: 0 0 0 rgba(0,240,224,0); }
+    30% { box-shadow: 0 18px 60px rgba(0,240,224,0.10); }
+    100% { box-shadow: 0 0 0 rgba(0,240,224,0); }
+  }
 
   .small-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:9px;color:#dbe9e8;cursor:pointer}
   .small-btn:hover{background:rgba(0,240,224,0.03);transform:translateY(-2px)}
@@ -127,85 +129,44 @@
 </style>
 </head>
 <body>
-  <!-- page loader -->
   <div id="pageLoader" aria-hidden="true"><div class="ring" role="status"></div></div>
-
-  <!-- custom cursor container + dot -->
   <div id="cursor"><div id="cursorDot" class="cursor-dot glow" aria-hidden="true"></div></div>
 
-  <!-- launch overlay -->
-  <div id="launchOverlay" role="status" aria-hidden="true">
-    <div class="launch-box">
-      <div class="msg" id="launchMsg">Launching...</div>
-      <div class="sub" id="launchSub">Preparing connection — please wait.</div>
-    </div>
-  </div>
+  <div id="launchOverlay" role="status" aria-hidden="true"><div class="launch-box"><div class="msg" id="launchMsg">Launching...</div><div class="sub" id="launchSub">Preparing connection — please wait.</div></div></div>
 
-  <!-- header -->
   <header>
     <div class="brand">WeAreFSL</div>
     <nav>
       <a href="https://discord.gg/xJdYjyNHZB" target="_blank">Download</a>
       <a href="#community" id="navCommunity">Community</a>
       <a href="https://pastebin.com/raw/SExHMhyU" target="_blank">Contacts</a>
-
-      <!-- YouTube icon (opens in new tab) -->
       <a href="https://www.youtube.com/@WeAreFSL" target="_blank" title="YouTube">
-        <svg class="yt-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.12C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.49A3 3 0 0 0 .4 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .4 5.8 3 3 0 0 0 2.1 2.12c1.8.49 9.4.49 9.4.49s7.6 0 9.4-.49A3 3 0 0 0 23.6 17.8 31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.8 15.5V8.5l6 3.5-6 3.5z"/>
-        </svg>
-        <span style="display:none">YouTube</span>
+        <svg class="yt-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.12C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.49A3 3 0 0 0 .4 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .4 5.8 3 3 0 0 0 2.1 2.12c1.8.49 9.4.49 9.4.49s7.6 0 9.4-.49A3 3 0 0 0 23.6 17.8 31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.8 15.5V8.5l6 3.5-6 3.5z"/></svg>
       </a>
-
       <a href="#" id="openSettings">Settings</a>
     </nav>
   </header>
 
   <main class="container">
-    <!-- hero -->
     <section class="hero">
       <div class="title">WeAreFSL</div>
       <div class="subtitle" style="margin-top:12px"><span id="typingArea" style="color:#9fdfe0"></span></div>
       <a class="cta" href="https://discord.gg/xJdYjyNHZB" target="_blank" style="margin-top:18px">Get Now</a>
     </section>
 
-    <!-- features -->
     <section class="features" aria-label="features">
-      <div class="card" data-action="launch" data-target="https://discord.gg/xJdYjyNHZB">
-        <div class="tooltip">Launch in game</div>
-        <h3>Paid</h3>
-        <p>Premium access with all features unlocked.</p>
-      </div>
-      <div class="card" data-action="message" data-msg="This product is safe — no malware.">
-        <div class="tooltip">View details</div>
-        <h3>100% Safe</h3>
-        <p>Does not contain malware or unwanted code.</p>
-      </div>
-      <div class="card" data-action="launch" data-target="https://discord.gg/xJdYjyNHZB">
-        <div class="tooltip">Launch in game</div>
-        <h3>High UNC</h3>
-        <p>99% UNC — top reliability.</p>
-      </div>
+      <div class="card" data-action="launch" data-target="https://discord.gg/xJdYjyNHZB"><div class="tooltip">Launch in game</div><h3>Paid</h3><p>Premium access with all features unlocked.</p></div>
+      <div class="card" data-action="message" data-msg="This product is safe — no malware."><div class="tooltip">View details</div><h3>100% Safe</h3><p>Does not contain malware or unwanted code.</p></div>
+      <div class="card" data-action="launch" data-target="https://discord.gg/xJdYjyNHZB"><div class="tooltip">Launch in game</div><h3>High UNC</h3><p>99% UNC — top reliability.</p></div>
     </section>
 
-    <!-- spacer so community isn't fully visible (reduced so top peeks in) -->
     <div class="spacer" aria-hidden="true"></div>
 
-    <!-- community section (iframe only) -->
     <section id="community" class="community" aria-labelledby="communityTitle">
       <div class="community-inner">
-        <div class="comm-head">
-          <h2 id="communityTitle">Community</h2>
-          <div>
-            <button id="refreshIframe" class="small-btn">Reload widget</button>
-          </div>
-        </div>
-
+        <div class="comm-head"><h2 id="communityTitle">Community</h2><div><button id="refreshIframe" class="small-btn">Reload widget</button></div></div>
         <div class="iframe-wrap" id="iframeWrap">
-          <iframe id="discordIframe" src="https://discord.com/widget?id=1407757559292755988&theme=dark"
-                  width="350" height="500"
-                  sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-                  title="Discord widget"></iframe>
+          <iframe id="discordIframe" src="https://discord.com/widget?id=1407757559292755988&theme=dark" width="350" height="500" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" title="Discord widget"></iframe>
         </div>
       </div>
     </section>
@@ -213,12 +174,10 @@
     <footer style="margin-top:40px;padding:36px 0;text-align:center;color:#80999a">© 2025 WeAreFSL. All rights reserved.</footer>
   </main>
 
-  <!-- settings panel -->
   <aside id="settingsPanel" class="settings-panel" aria-hidden="true">
     <div class="close-x" id="closeSettings">✕</div>
     <h3>Settings</h3>
-    <div>
-      <strong>Cursor style</strong>
+    <div><strong>Cursor style</strong>
       <div class="radio-row" id="cursorOptions">
         <label><input type="radio" name="cursorChoice" value="glow"> Glow</label>
         <label><input type="radio" name="cursorChoice" value="crosshair"> Crosshair</label>
@@ -227,66 +186,33 @@
         <label><input type="radio" name="cursorChoice" value="pulse"> Pulse</label>
       </div>
     </div>
-    <div style="margin-top:20px">
-      <button id="closePanelBtn" class="small-btn">Close</button>
-    </div>
+    <div style="margin-top:20px"><button id="closePanelBtn" class="small-btn">Close</button></div>
   </aside>
 
 <script>
-/* ---------- Cursor: smooth follow; inner dot used for hover transform ---------- */
+/* Outer cursor follows pointer */
 const cursor = document.getElementById('cursor');
 const cursorDot = document.getElementById('cursorDot');
 let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
 let curX = mouseX, curY = mouseY;
 document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+(function loop(){ curX += (mouseX - curX) * 0.18; curY += (mouseY - curY) * 0.18; cursor.style.left = curX + 'px'; cursor.style.top = curY + 'px'; requestAnimationFrame(loop); })();
 
-// animate outer container position (keeps inner transforms independent)
-(function loop(){
-  curX += (mouseX - curX) * 0.18;
-  curY += (mouseY - curY) * 0.18;
-  cursor.style.left = curX + 'px';
-  cursor.style.top = curY + 'px';
-  requestAnimationFrame(loop);
-})();
-
-/* ---------- Hover behavior: when over interactive elements, add hovered state to cursorDot and lift element ---------- */
+/* Slight cursor scaling on hover (no glow change) */
 const interactiveSelectors = ['a','button','.card','.small-btn','.cta'];
-function attachHoverEffects(){
-  document.querySelectorAll(interactiveSelectors.join(',')).forEach(el=>{
-    el.addEventListener('mouseenter', ()=> {
-      cursorDot.classList.add('hovered');
-      el.classList.add('hovered-element'); // used to lift element (CSS below)
-    }, {passive:true});
-    el.addEventListener('mouseleave', ()=> {
-      cursorDot.classList.remove('hovered');
-      el.classList.remove('hovered-element');
-    }, {passive:true});
-  });
-}
-attachHoverEffects();
+function bindHoverScale(){ document.querySelectorAll(interactiveSelectors.join(',')).forEach(el=>{ el.addEventListener('mouseenter', ()=> cursorDot.style.transform = 'translate(-50%,-50%) scale(1.06)', {passive:true}); el.addEventListener('mouseleave', ()=> cursorDot.style.transform = 'translate(-50%,-50%) scale(1)', {passive:true}); }); }
+bindHoverScale();
 
-/* Add CSS for .hovered-element (lift & highlight) dynamically to avoid modifying main CSS block */
-(function addHoverCSS(){
-  const s = document.createElement('style');
-  s.textContent = `
-    .hovered-element { transform: translateY(-8px) !important; box-shadow: 0 18px 60px rgba(0,240,224,0.06) !important; transition: transform .12s ease, box-shadow .12s ease; }
-  `;
-  document.head.appendChild(s);
-})();
-
-/* ---------- page loader (session) ---------- */
+/* page loader */
 const pageLoader = document.getElementById('pageLoader');
-window.addEventListener('load', ()=> {
-  if(sessionStorage.getItem('visited')) pageLoader.style.display='none';
-  else { setTimeout(()=>{ pageLoader.style.opacity=0; setTimeout(()=>pageLoader.style.display='none',420); },1400); sessionStorage.setItem('visited','1'); }
-});
+window.addEventListener('load', ()=> { if(sessionStorage.getItem('visited')) pageLoader.style.display='none'; else { setTimeout(()=>{ pageLoader.style.opacity=0; setTimeout(()=>pageLoader.style.display='none',420); },1400); sessionStorage.setItem('visited','1'); } });
 
-/* ---------- typing effect ---------- */
+/* typing */
 const typingArea = document.getElementById('typingArea');
 const message = "Good executor for Roblox — light, fast and reliable.";
 (function type(i=0){ if(i<message.length){ typingArea.textContent += message[i++]; setTimeout(()=>type(i),36); }})();
 
-/* ---------- settings panel open/close & persistence ---------- */
+/* Settings panel */
 const settingsPanel = document.getElementById('settingsPanel');
 const openSettings = document.getElementById('openSettings');
 const closeSettings = document.getElementById('closeSettings');
@@ -295,72 +221,74 @@ openSettings.addEventListener('click', e=>{ e.preventDefault(); settingsPanel.cl
 closeSettings.addEventListener('click', ()=>{ settingsPanel.classList.remove('open'); settingsPanel.setAttribute('aria-hidden','true'); });
 closePanelBtn.addEventListener('click', ()=>{ settingsPanel.classList.remove('open'); settingsPanel.setAttribute('aria-hidden','true'); });
 
-// cursor options + localStorage
+// cursor style persistence
 const saved = localStorage.getItem('wearefsl_cursor') || 'glow';
 const radios = document.querySelectorAll('input[name="cursorChoice"]');
-function applyCursor(name){
-  // set class on cursorDot
-  cursorDot.className = 'cursor-dot ' + name;
-  localStorage.setItem('wearefsl_cursor', name);
-}
-radios.forEach(r => {
-  if(r.value === saved) r.checked = true;
-  r.addEventListener('change', ()=> applyCursor(r.value));
-});
+function applyCursor(name){ cursorDot.className = 'cursor-dot ' + name; localStorage.setItem('wearefsl_cursor', name); }
+radios.forEach(r => { if(r.value === saved) r.checked = true; r.addEventListener('change', ()=> applyCursor(r.value)); });
 applyCursor(saved);
 
-/* ---------- card hover tooltip + click behaviors (launch/message) ---------- */
+/* Glow-only behavior for cards */
 const cards = document.querySelectorAll('.card');
+cards.forEach(card => {
+  card.addEventListener('mouseenter', e => { card.classList.add('hovered'); updateGlow(card, e); });
+  card.addEventListener('mousemove', e => updateGlow(card, e));
+  card.addEventListener('mouseleave', () => { card.classList.remove('hovered'); card.style.setProperty('--glow-opacity', '0'); card.style.setProperty('--glow-visible', '0'); card.style.setProperty('--glow-pos', '50% 50%'); });
+});
+
+function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+function updateGlow(el, ev){
+  const rect = el.getBoundingClientRect();
+  const relX = clamp(ev.clientX - rect.left, 0, rect.width);
+  const relY = clamp(ev.clientY - rect.top, 0, rect.height);
+  const xPercent = Math.round((relX / rect.width) * 100);
+  const yPercent = Math.round((relY / rect.height) * 100);
+  el.style.setProperty('--glow-pos', `${xPercent}% ${yPercent}%`);
+  const cx = rect.width / 2, cy = rect.height / 2;
+  const dx = relX - cx, dy = relY - cy;
+  const dist = Math.sqrt(dx*dx + dy*dy);
+  const max = Math.sqrt((rect.width/2)*(rect.width/2) + (rect.height/2)*(rect.height/2));
+  const norm = clamp(1 - (dist / max), 0, 1);
+  const opacity = (0.25 + 0.6 * norm).toFixed(2);
+  el.style.setProperty('--glow-opacity', opacity);
+  el.style.setProperty('--glow-visible', '1');
+}
+
+/* Card click actions */
 const launchOverlay = document.getElementById('launchOverlay');
 const launchMsg = document.getElementById('launchMsg');
 const launchSub = document.getElementById('launchSub');
+cards.forEach(card=>{ card.addEventListener('click', ()=>{ const action = card.getAttribute('data-action'); if(action === 'launch'){ const target = card.getAttribute('data-target') || 'https://discord.gg/xJdYjyNHZB'; launchMsg.textContent = 'Launching...'; launchSub.textContent = 'Opening a new window.'; launchOverlay.classList.add('show'); setTimeout(()=>{ window.open(target, '_blank'); setTimeout(()=> launchOverlay.classList.remove('show'), 900); }, 700); } else if(action === 'message'){ const msg = card.getAttribute('data-msg') || 'Info'; launchMsg.textContent = 'Info'; launchSub.textContent = msg; launchOverlay.classList.add('show'); setTimeout(()=> launchOverlay.classList.remove('show'), 1400); } }); });
 
-cards.forEach(card => {
-  card.addEventListener('mouseenter', ()=> card.classList.add('hovered'));
-  card.addEventListener('mouseleave', ()=> card.classList.remove('hovered'));
-  card.addEventListener('click', ()=>{
-    const action = card.getAttribute('data-action');
-    if(action === 'launch'){
-      const target = card.getAttribute('data-target') || 'https://discord.gg/xJdYjyNHZB';
-      launchMsg.textContent = 'Launching...';
-      launchSub.textContent = 'Opening a new window.';
-      launchOverlay.classList.add('show');
-      setTimeout(()=>{ window.open(target, '_blank'); setTimeout(()=> launchOverlay.classList.remove('show'), 900); }, 700);
-    } else if(action === 'message'){
-      const msg = card.getAttribute('data-msg') || 'Info';
-      launchMsg.textContent = 'Info';
-      launchSub.textContent = msg;
-      launchOverlay.classList.add('show');
-      setTimeout(()=> launchOverlay.classList.remove('show'), 1400);
-    }
-  });
-});
-
-/* ---------- community reveal on scroll (IntersectionObserver) ---------- */
+/* IntersectionObserver for community reveal */
 const communitySection = document.getElementById('community');
-const io = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      communitySection.classList.add('visible');
-      io.unobserve(communitySection);
-    }
-  });
-},{threshold:0.12});
+const io = new IntersectionObserver(entries => { entries.forEach(entry => { if(entry.isIntersecting){ communitySection.classList.add('visible'); io.unobserve(communitySection); } }); }, {threshold:0.12});
 io.observe(communitySection);
 
-/* ---------- iframe reload ---------- */
-const discordIframe = document.getElementById('discordIframe');
-const refreshIframe = document.getElementById('refreshIframe');
-if(refreshIframe) refreshIframe.addEventListener('click', ()=>{
-  const src = discordIframe.getAttribute('src');
-  discordIframe.setAttribute('src','');
-  setTimeout(()=> discordIframe.setAttribute('src', src), 140);
+/* NEW: smooth scroll + pulse animation when clicking nav Community */
+const navCommunity = document.getElementById('navCommunity');
+navCommunity.addEventListener('click', (e) => {
+  e.preventDefault();
+  // Scroll smoothly to community (block: start keeps top visible)
+  communitySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Add pulse highlight shortly after scroll starts (timing chosen to match smooth scroll)
+  // If section already visible, still pulse immediately.
+  const delay = 500; // ms
+  setTimeout(() => {
+    communitySection.classList.add('pulse-highlight');
+    // remove pulse class after animation finishes
+    setTimeout(() => communitySection.classList.remove('pulse-highlight'), 1100);
+  }, delay);
 });
 
-/* ---------- accessibility: ESC closes settings ---------- */
-document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape'){ settingsPanel.classList.remove('open'); settingsPanel.setAttribute('aria-hidden','true'); }
-});
+/* iframe reload */
+const discordIframe = document.getElementById('discordIframe');
+const refreshIframe = document.getElementById('refreshIframe');
+if(refreshIframe) refreshIframe.addEventListener('click', ()=>{ const src = discordIframe.getAttribute('src'); discordIframe.setAttribute('src',''); setTimeout(()=> discordIframe.setAttribute('src', src), 140); });
+
+/* ESC closes settings */
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape'){ settingsPanel.classList.remove('open'); settingsPanel.setAttribute('aria-hidden','true'); }});
 </script>
 </body>
 </html>
