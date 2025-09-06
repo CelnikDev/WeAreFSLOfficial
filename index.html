@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Solara-esque — lekka strona startowa</title>
+    <meta name="description" content="Nowoczesna, responsywna strona startowa inspirowana układem getsolara.dev. Jednoplikowa implementacja z Tailwind CSS.">
+    <meta property="og:title" content="Solara-esque — lekka strona startowa" />
+    <meta property="og:description" content="Nowoczesna, responsywna strona startowa inspirowana układem getsolara.dev." />
+    <meta property="og:type" content="website" />
+
+    <!-- Tailwind CSS via CDN (najprościej na start) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Ubuntu", "Cantarell", "Noto Sans", "Helvetica Neue", "Arial", "sans-serif"],
+              mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "monospace"],
+            },
+            boxShadow: {
+              soft: "0 10px 25px -10px rgba(0,0,0,0.25)",
+            },
+            backgroundImage: {
+              "grid":
+                "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)",
+            },
+          },
+        },
+        darkMode: "class",
+      };
+    </script>
+    <style>
+      /* Subtelne podświetlenie bloków kodu bez dodatkowych bibliotek */
+      pre code { counter-reset: line; }
+      code .line { display: block; padding-left: 1rem; text-indent: -1rem; }
+      code .line::before { counter-increment: line; content: counter(line); display: inline-block; width: 1.5rem; opacity: .4; margin-right: .5rem; }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-display">
+    <!-- Tło dekoracyjne -->
+    <div class="fixed inset-0 -z-10">
+      <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-fuchsia-500/10 to-cyan-400/10"></div>
+      <div class="absolute inset-0 bg-grid bg-[length:22px_22px]"></div>
+      <div class="absolute -top-32 -left-32 h-96 w-96 rounded-full blur-3xl bg-fuchsia-400/20"></div>
+      <div class="absolute -bottom-32 -right-32 h-96 w-96 rounded-full blur-3xl bg-cyan-400/20"></div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/40 dark:supports-[backdrop-filter]:bg-slate-900/40 border-b border-slate-900/10 dark:border-white/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between">
+          <a href="#" class="flex items-center gap-2">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-500 shadow-soft">
+              <!-- minimalny logotyp -->
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 text-white">
+                <path d="M12 2l3.5 6.5L22 9l-5 4.9L18.5 21 12 17.7 5.5 21 7 13.9 2 9l6.5-.5L12 2z" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="font-semibold tracking-tight">Solara‑esque</span>
+          </a>
+
+          <nav class="hidden md:flex items-center gap-6 text-sm">
+            <a href="#features" class="hover:text-indigo-600 dark:hover:text-indigo-400">Funkcje</a>
+            <a href="#demo" class="hover:text-indigo-600 dark:hover:text-indigo-400">Demo</a>
+            <a href="#docs" class="hover:text-indigo-600 dark:hover:text-indigo-400">Dokumentacja</a>
+            <a href="#pricing" class="hover:text-indigo-600 dark:hover:text-indigo-400">Cennik</a>
+            <a href="#faq" class="hover:text-indigo-600 dark:hover:text-indigo-400">FAQ</a>
+          </nav>
+
+          <div class="flex items-center gap-2">
+            <button id="themeToggle" class="inline-flex items-center gap-2 rounded-xl border border-slate-900/10 dark:border-white/10 px-3 py-1.5 text-sm hover:bg-slate-900/5 dark:hover:bg-white/5">
+              <span class="sr-only">Przełącz motyw</span>
+              <svg id="sun" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4m11.4-11.4 1.4-1.4"/>
+              </svg>
+              <svg id="moon" class="h-5 w-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </button>
+            <a href="#docs" class="hidden sm:inline-flex items-center rounded-xl bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white shadow-soft hover:bg-indigo-500">Zacznij</a>
+
+            <button id="menuBtn" class="md:hidden inline-flex items-center rounded-xl px-3 py-2 hover:bg-slate-900/5 dark:hover:bg-white/5" aria-label="Otwórz menu">
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="md:hidden hidden border-t border-slate-900/10 dark:border-white/10">
+        <div class="mx-auto max-w-7xl px-4 py-4 space-y-3 text-sm">
+          <a href="#features" class="block">Funkcje</a>
+          <a href="#demo" class="block">Demo</a>
+          <a href="#docs" class="block">Dokumentacja</a>
+          <a href="#pricing" class="block">Cennik</a>
+          <a href="#faq" class="block">FAQ</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 rounded-full border border-slate-900/10 dark:border-white/10 px-2 py-1 text-xs mb-4 bg-white/40 dark:bg-slate-900/40">
+              <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Wersja demo • Open‑source vibe</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+              Buduj interaktywne <span class="bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent">interfejsy</span> w kilka minut
+            </h1>
+            <p class="mt-5 text-lg text-slate-600 dark:text-slate-300 max-w-xl">
+              Lekki szablon landing page inspirowany getsolara.dev — bez kopiowania treści. Idealny do bibliotek, narzędzi i frameworków.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="#docs" class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-white shadow-soft hover:bg-indigo-500">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14m-7-7h14"/></svg>
+                Szybki start
+              </a>
+              <a href="#demo" class="inline-flex items-center gap-2 rounded-xl border border-slate-900/10 dark:border-white/10 px-4 py-2 hover:bg-slate-900/5 dark:hover:bg-white/5">
+                Zobacz demo
+              </a>
+            </div>
+
+            <!-- Małe logotypy/integracje -->
+            <div class="mt-10 grid grid-cols-3 gap-6 opacity-80">
+              <div class="flex items-center gap-2 text-sm"><span class="h-2 w-2 rounded-full bg-indigo-500"></span> Tailwind</div>
+              <div class="flex items-center gap-2 text-sm"><span class="h-2 w-2 rounded-full bg-cyan-500"></span> Vite/Parcel</div>
+              <div class="flex items-center gap-2 text-sm"><span class="h-2 w-2 rounded-full bg-fuchsia-500"></span> Markdown</div>
+            </div>
+          </div>
+
+          <!-- Karta demo -->
+          <div id="demo" class="relative">
+            <div class="rounded-2xl border border-slate-900/10 dark:border-white/10 bg-white/70 dark:bg-slate-900/70 backdrop-blur shadow-soft">
+              <div class="flex items-center gap-2 px-4 py-2 border-b border-slate-900/10 dark:border-white/10">
+                <span class="h-3 w-3 rounded-full bg-rose-400"></span>
+                <span class="h-3 w-3 rounded-full bg-amber-400"></span>
+                <span class="h-3 w-3 rounded-full bg-emerald-400"></span>
+                <span class="ml-auto text-xs opacity-60">podgląd komponentu</span>
+              </div>
+              <div class="p-4">
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div class="rounded-xl border border-slate-900/10 dark:border-white/10 p-4">
+                    <h3 class="font-semibold mb-2">Formularz</h3>
+                    <label class="block text-sm mb-1" for="email">Email</label>
+                    <input id="email" type="email" placeholder="ty@domena.pl" class="w-full rounded-lg border border-slate-900/10 dark:border-white/10 bg-transparent px-3 py-2" />
+                    <label class="block text-sm mt-3 mb-1" for="role">Rola</label>
+                    <select id="role" class="w-full rounded-lg border border-slate-900/10 dark:border-white/10 bg-transparent px-3 py-2">
+                      <option>Frontend</option>
+                      <option>Backend</option>
+                      <option>Data</option>
+                    </select>
+                    <button class="mt-4 w-full rounded-lg bg-indigo-600 py-2 text-white hover:bg-indigo-500">Wyślij</button>
+                  </div>
+                  <div class="rounded-xl border border-slate-900/10 dark:border-white/10 p-4">
+                    <h3 class="font-semibold mb-2">Wynik</h3>
+                    <pre class="rounded-lg bg-slate-900/90 text-slate-100 p-3 overflow-auto"><code class="font-mono text-sm" id="result"><span class="line">{</span><span class="line">  &quot;email&quot;: &quot;ty@domena.pl&quot;,</span><span class="line">  &quot;rola&quot;: &quot;Frontend&quot;</span><span class="line">}</span></code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pointer-events-none absolute -z-10 -right-6 -bottom-6 h-40 w-40 rounded-full bg-indigo-500/20 blur-2xl"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-3xl font-bold">Mały kod, duży efekt</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">Poniższe sekcje to neutralny, czysty design — możesz łatwo podmienić treści pod swój projekt.</p>
+        </div>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Card 1 -->
+          <div class="rounded-2xl border border-slate-900/10 dark:border-white/10 p-6 bg-white/60 dark:bg-slate-900/60">
+            <div class="h-10 w-10 rounded-lg bg-indigo-500/10 inline-flex items-center justify-center mb-3">
+              <svg class="h-5 w-5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6v12m6-6H6"/></svg>
+            </div>
+            <h3 class="font-semibold">Gotowy szkielet</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Hero, funkcje, demo, dokumentacja, cennik i FAQ — wszystko w jednym pliku.</p>
+          </div>
+          <!-- Card 2 -->
+          <div class="rounded-2xl border border-slate-900/10 dark:border-white/10 p-6 bg-white/60 dark:bg-slate-900/60">
+            <div class="h-10 w-10 rounded-lg bg-indigo-500/10 inline-flex items-center justify-center mb-3">
+              <svg class="h-5 w-5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
+            </div>
+            <h3 class="font-semibold">Czysty layout</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Siatka kart i sekcji inspirowana współczesnymi landingami bibliotek.</p>
+          </div>
+          <!-- Card 3 -->
+          <div class="rounded-2xl border border-slate-900/10 dark:border-white/10 p-6 bg-white/60 dark:bg-slate-900/60">
+            <div class="h-10 w-10 rounded-lg bg-indigo-500/10 inline-flex items-center justify-center mb-3">
+              <svg class="h-5 w-5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 4-8 4-8-4 8-4zm0 8l8 4-8 4-8-4 8-4z"/></svg>
+            </div>
+            <h3 class="font-semibold">Dark mode</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Wbudowany przełącznik motywu z zapisem preferencji w localStorage.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Docs / Quickstart -->
+    <section id="docs" class="py-20 border-t border-slate-900/10 dark:border-white/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <h2 class="text-3xl font-bold">Szybki start</h2>
+            <p class="mt-4 text-slate-600 dark:text-slate-300">Skopiuj plik, podmień treści i wrzuć na Netlify/Vercel. Poniżej przykład minimalnej struktury projektu.</p>
+            <pre class="mt-4 rounded-xl bg-slate-900 text-slate-100 p-4 overflow-auto"><code class="font-mono text-sm"><span class="line">project/</span><span class="line">├─ index.html</span><span class="line">└─ public/</span><span class="line">   └─ favicon.svg</span></code></pre>
+          </div>
+          <div>
+            <h3 class="font-semibold">Instalacja (opcjonalnie z Vite)</h3>
+            <pre class="mt-3 rounded-xl bg-slate-900 text-slate-100 p-4 overflow-auto"><code class="font-mono text-sm"><span class="line">npm create vite@latest my-app -- --template vanilla</span><span class="line">cd my-app</span><span class="line">npm i -D tailwindcss@latest postcss autoprefixer</span><span class="line">npx tailwindcss init -p</span></code></pre>
+            <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">Ten szablon działa też bez buildu (CDN), więc możesz go używać jako czysty HTML.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-3xl font-bold">Cennik</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">To tylko przykładowe karty — podmień na swoje plany.</p>
+        </div>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Free -->
+          <div class="rounded-2xl border border-slate-900/10 dark:border-white/10 p-6 bg-white/60 dark:bg-slate-900/60">
+            <h3 class="font-semibold">Free</h3>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Na start i testy</p>
+            <div class="mt-4 text-3xl font-bold">0 zł<span class="text-base font-medium text-slate-500">/msc</span></div>
+            <ul class="mt-4 space-y-2 text-sm">
+              <li>• Hosting statyczny</li>
+              <li>• Certyfikat HTTPS</li>
+              <li>• Limit do 1 projektu</li>
+            </ul>
+            <button class="mt-6 w-full rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 py-2">Wybierz</button>
+          </div>
+          <!-- Pro -->
+          <div class="rounded-2xl border-2 border-indigo-500 p-6 bg-white/80 dark:bg-slate-900/80 shadow-soft">
+            <div class="inline-flex items-center gap-2 rounded-full bg-indigo-600/10 px-2 py-1 text-xs text-indigo-700 dark:text-indigo-300">Najpopularniejszy</div>
+            <h3 class="mt-2 font-semibold">Pro</h3>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Dla małych zespołów</p>
+            <div class="mt-4 text-3xl font-bold">29 zł<span class="text-base font-medium text-slate-500">/msc</span></div>
+            <ul class="mt-4 space-y-2 text-sm">
+              <li>• Wszystko z Free</li>
+              <li>• Custom domeny</li>
+              <li>• Podstawowy CDN</li>
+            </ul>
+            <button class="mt-6 w-full rounded-xl bg-indigo-600 text-white py-2 hover:bg-indigo-500">Wybierz</button>
+          </div>
+          <!-- Team -->
+          <div class="rounded-2xl border border-slate-900/10 dark:border-white/10 p-6 bg-white/60 dark:bg-slate-900/60">
+            <h3 class="font-semibold">Team</h3>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Większe projekty</p>
+            <div class="mt-4 text-3xl font-bold">79 zł<span class="text-base font-medium text-slate-500">/msc</span></div>
+            <ul class="mt-4 space-y-2 text-sm">
+              <li>• Priorytetowe buildy</li>
+              <li>• Analityka</li>
+              <li>• SLA 99.9%</li>
+            </ul>
+            <button class="mt-6 w-full rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 py-2">Wybierz</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 border-t border-slate-900/10 dark:border-white/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-3xl font-bold">FAQ</h2>
+        </div>
+        <div class="mt-10 grid gap-4 md:grid-cols-2">
+          <details class="rounded-xl border border-slate-900/10 dark:border-white/10 p-4 bg-white/60 dark:bg-slate-900/60">
+            <summary class="cursor-pointer font-medium">Czy mogę użyć tego w komercyjnym projekcie?</summary>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Tak, to neutralny szablon. Pamiętaj, by nie kopiować znaków towarowych ani oryginalnych treści innych stron.</p>
+          </details>
+          <details class="rounded-xl border border-slate-900/10 dark:border-white/10 p-4 bg-white/60 dark:bg-slate-900/60">
+            <summary class="cursor-pointer font-medium">Czy potrzebuję bundlera?</summary>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Nie, działa z samym CDN Tailwinda. Bundler ułatwia większe projekty.</p>
+          </details>
+          <details class="rounded-xl border border-slate-900/10 dark:border-white/10 p-4 bg-white/60 dark:bg-slate-900/60">
+            <summary class="cursor-pointer font-medium">Jak wdrożyć?</summary>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Wrzuć repo do GitHub i podłącz w Netlify/Vercel/Cloudflare Pages — jeden klik i gotowe.</p>
+          </details>
+          <details class="rounded-xl border border-slate-900/10 dark:border-white/10 p-4 bg-white/60 dark:bg-slate-900/60">
+            <summary class="cursor-pointer font-medium">Czy jest ciemny motyw?</summary>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Tak, przełącznik u góry zapisuje preferencję w localStorage.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-slate-900/10 dark:border-white/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-600 dark:text-slate-300">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-500">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 text-white"><path d="M12 2l3.5 6.5L22 9l-5 4.9L18.5 21 12 17.7 5.5 21 7 13.9 2 9l6.5-.5L12 2z" fill="currentColor"/></svg>
+            </span>
+            <span>© <span id="year"></span> Solara‑esque</span>
+          </div>
+          <nav class="flex items-center gap-4">
+            <a href="#docs" class="hover:text-indigo-600 dark:hover:text-indigo-400">Dokumentacja</a>
+            <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">Status</a>
+            <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">Polityka</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle
+      const menuBtn = document.getElementById('menuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+      // Dark mode toggle with persistence
+      const html = document.documentElement;
+      const themeToggle = document.getElementById('themeToggle');
+      const sun = document.getElementById('sun');
+      const moon = document.getElementById('moon');
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+        sun.classList.add('hidden');
+        moon.classList.remove('hidden');
+      }
+      themeToggle?.addEventListener('click', () => {
+        const isDark = html.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        sun.classList.toggle('hidden');
+        moon.classList.toggle('hidden');
+      });
+
+      // Mini demo: synchronizacja formularza -> JSON
+      const emailInput = document.getElementById('email');
+      const roleSelect = document.getElementById('role');
+      const resultCode = document.getElementById('result');
+      function updateJSON(){
+        const obj = { email: emailInput.value || 'ty@domena.pl', rola: roleSelect.value };
+        const json = JSON.stringify(obj, null, 2).split('\n').map(l => `<span class="line">${l.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span>`).join('');
+        resultCode.innerHTML = json;
+      }
+      emailInput?.addEventListener('input', updateJSON);
+      roleSelect?.addEventListener('change', updateJSON);
+      updateJSON();
+
+      // Rok w stopce
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
