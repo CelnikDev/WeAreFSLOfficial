@@ -4,17 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Remakes Executor</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://kit.fontawesome.com/a2d9d5a64f.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-900 flex items-center justify-center min-h-screen">
-  <div class="text-center">
-    <h1 class="text-3xl font-bold text-white mb-8">Remakes Executor</h1>
-    <a href="https://discord.gg/xJdYjyNHZB" target="_blank"
-       class="px-8 py-4 text-lg font-semibold rounded-2xl shadow-lg 
-              bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
-              text-white hover:scale-105 transform transition">
-      Get Remakes Executor
+<body>
+  <canvas id="particles"></canvas>
+  <div class="overlay"></div>
+
+  <main class="container fade-in">
+    <h1 class="logo">Remakes <span>Executor</span></h1>
+    <a href="https://discord.gg/xJdYjyNHZB" target="_blank" id="btn" class="btn-glow">
+      <i class="fa-brands fa-discord"></i> Get Remakes Executor
     </a>
-  </div>
+    <p class="subtitle">The ultimate Roblox Executor experience</p>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
