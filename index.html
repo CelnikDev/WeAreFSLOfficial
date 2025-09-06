@@ -16,12 +16,17 @@
       color: #fff;
       line-height: 1.6;
     }
+
+    /* HEADER */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px 50px;
       background: #111;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     header h1 {
       font-size: 1.5rem;
@@ -36,6 +41,8 @@
     nav a:hover {
       color: #fff;
     }
+
+    /* HERO */
     .hero {
       text-align: center;
       padding: 100px 20px 60px;
@@ -58,6 +65,7 @@
       font-weight: bold;
       text-decoration: none;
       transition: transform 0.3s, background 0.3s;
+      display: inline-block;
     }
     .btn:hover {
       transform: scale(1.05);
@@ -68,17 +76,20 @@
       font-size: 0.9rem;
       color: #888;
     }
+
+    /* FEATURES */
     .features {
       display: flex;
       justify-content: center;
       gap: 30px;
       padding: 60px 20px;
+      flex-wrap: wrap;
     }
     .card {
       background: #1a1a1a;
       padding: 30px;
-      border-radius: 10px;
-      width: 250px;
+      border-radius: 12px;
+      width: 280px;
       text-align: center;
       transition: transform 0.3s, box-shadow 0.3s;
     }
@@ -88,45 +99,96 @@
     }
     .card h3 {
       margin-bottom: 10px;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
     .card p {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: #aaa;
+    }
+
+    /* EXTRA SECTION */
+    .about {
+      padding: 80px 20px;
+      text-align: center;
+      background: #111;
+    }
+    .about h2 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+    .about p {
+      max-width: 800px;
+      margin: 0 auto;
+      color: #bbb;
+      font-size: 1.1rem;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: #0b0b0b;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    @media(max-width: 768px) {
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+      .card {
+        width: 90%;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- HEADER -->
   <header>
     <h1>WeAreFSL</h1>
     <nav>
-      <a href="#">Download</a>
-      <a href="#">Preview</a>
-      <a href="#">API</a>
-      <a href="#">Contacts</a>
+      <a href="https://discord.gg/xJdYjyNHZB" target="_blank">Download</a>
+      <a href="https://pastebin.com/raw/SExHMhyU" target="_blank">Contacts</a>
     </nav>
   </header>
 
+  <!-- HERO -->
   <section class="hero">
     <h2>WeAreFSL</h2>
     <p>Good executor for Roblox, easy to use and fast.</p>
-    <a href="#" class="btn">Download now</a>
+    <a href="https://discord.gg/xJdYjyNHZB" target="_blank" class="btn">Download now</a>
     <div class="version">Current Version: 2.5.1</div>
   </section>
 
+  <!-- FEATURES -->
   <section class="features">
     <div class="card">
       <h3>Paid</h3>
-      <p>Premium access with full features unlocked.</p>
+      <p>Premium access with all features unlocked.</p>
     </div>
     <div class="card">
       <h3>100% Safe</h3>
-      <p>Does not contain malware.</p>
+      <p>Does not contain malware or unwanted code.</p>
     </div>
     <div class="card">
       <h3>High UNC</h3>
       <p>99% UNC</p>
     </div>
   </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <h2>Why choose WeAreFSL?</h2>
+    <p>
+      WeAreFSL is designed for simplicity, safety and maximum performance.  
+      Our executor is constantly updated, optimized for stability, and tested to ensure the best user experience possible.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 WeAreFSL. All rights reserved.
+  </footer>
 </body>
 </html>
