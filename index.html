@@ -8,10 +8,18 @@
     * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; scroll-behavior: smooth; }
     body {
       font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #0f0f0f, #0a0a0a);
+      background: linear-gradient(-45deg, #0f0f0f, #111, #0a0a0a, #1a1a1a);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
       color: #fff;
       line-height: 1.6;
       overflow-x: hidden;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     /* Loader */
@@ -27,24 +35,31 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Cursor (celownik) */
+    /* Cursors */
     .cursor {
       position: fixed; top: 0; left: 0;
-      width: 30px; height: 30px;
       pointer-events: none; z-index: 9999;
       transform: translate(-50%, -50%);
-      display: flex; align-items: center; justify-content: center;
     }
-    .cursor::before, .cursor::after {
+    /* Glow */
+    .cursor.glow {
+      width: 25px; height: 25px;
+      border: 2px solid #00ffff; border-radius: 50%;
+      box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff66;
+    }
+    /* Celownik */
+    .cursor.crosshair {
+      width: 30px; height: 30px;
+    }
+    .cursor.crosshair::before, .cursor.crosshair::after {
       content: ""; position: absolute; background: #00ffff;
     }
-    .cursor::before {
-      width: 2px; height: 100%;
-      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff66;
-    }
-    .cursor::after {
-      height: 2px; width: 100%;
-      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff66;
+    .cursor.crosshair::before { width: 2px; height: 100%; left: 50%; transform: translateX(-50%); }
+    .cursor.crosshair::after { height: 2px; width: 100%; top: 50%; transform: translateY(-50%); }
+    /* Neon circle */
+    .cursor.circle {
+      width: 35px; height: 35px; border: 2px solid #00ffff; border-radius: 50%;
+      box-shadow: 0 0 20px #00ffff, inset 0 0 10px #00ffff88;
     }
 
     /* Header */
@@ -66,11 +81,12 @@
     /* Hero */
     .hero {
       text-align: center; padding: 120px 20px 80px;
-      background: linear-gradient(to bottom, #111, #0d0d0d);
       opacity: 0; animation: fadeIn 1.2s ease forwards; animation-delay: 1s;
     }
     .hero h2 { font-size: 3.2rem; margin-bottom: 20px; }
     .hero p { font-size: 1.2rem; color: #aaa; margin-bottom: 35px; }
+    .typing { border-right: 2px solid #00ffff; display: inline-block; animation: blink 0.8s infinite; }
+    @keyframes blink { 50% { border-color: transparent; } }
     .btn {
       background: #00ffff; color: #000;
       padding: 14px 35px; border-radius: 30px;
@@ -101,7 +117,7 @@
 
     /* About */
     .about {
-      padding: 90px 20px; text-align: center; background: #111;
+      padding: 90px 20px; text-align: center;
       opacity: 0; animation: fadeIn 1s ease forwards; animation-delay: 1.8s;
     }
     .about h2 { font-size: 2.3rem; margin-bottom: 25px; }
@@ -113,9 +129,7 @@
       opacity: 0; transform: translateY(60px);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    .discord.visible {
-      opacity: 1; transform: translateY(0);
-    }
+    .discord.visible { opacity: 1; transform: translateY(0); }
     .discord h2 { font-size: 2rem; margin-bottom: 20px; }
     .members {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -126,6 +140,8 @@
       border-radius: 12px; display: flex; align-items: center; gap: 12px;
       box-shadow: 0 0 10px rgba(0,255,255,0.1);
       transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 1s ease forwards;
     }
     .member:hover {
       transform: scale(1.05);
@@ -133,6 +149,17 @@
     }
     .member img { width: 40px; height: 40px; border-radius: 50%; }
     .member span { font-weight: 500; color: #eee; }
+
+    /* Settings Panel */
+    .settings-panel {
+      display: none; position: fixed; top: 0; right: 0; width: 300px; height: 100%;
+      background: #111; padding: 20px; z-index: 1500;
+      box-shadow: -2px 0 10px rgba(0,255,255,0.2);
+      animation: slideIn 0.5s ease forwards;
+    }
+    .settings-panel h2 { margin-bottom: 20px; }
+    .settings-panel label { display: block; margin: 10px 0; cursor: pointer; }
+    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
     /* Footer */
     footer {
@@ -157,7 +184,7 @@
   <div id="loader"><div class="spinner"></div></div>
 
   <!-- Cursor -->
-  <div class="cursor" id="cursor"></div>
+  <div class="cursor glow" id="cursor"></div>
 
   <!-- HEADER -->
   <header>
@@ -166,39 +193,28 @@
       <a href="https://discord.gg/xJdYjyNHZB" target="_blank">Download</a>
       <a href="#community" class="scroll">Community</a>
       <a href="https://pastebin.com/raw/SExHMhyU" target="_blank">Contacts</a>
+      <a href="#" id="settingsBtn">Settings</a>
     </nav>
   </header>
 
   <!-- HERO -->
   <section class="hero">
     <h2>WeAreFSL</h2>
-    <p>Good executor for Roblox, easy to use and fast.</p>
+    <p><span id="typing" class="typing"></span></p>
     <a href="https://discord.gg/xJdYjyNHZB" target="_blank" class="btn">Get Now</a>
   </section>
 
   <!-- FEATURES -->
   <section class="features">
-    <div class="card">
-      <h3>Paid</h3>
-      <p>Premium access with all features unlocked.</p>
-    </div>
-    <div class="card">
-      <h3>100% Safe</h3>
-      <p>Does not contain malware or unwanted code.</p>
-    </div>
-    <div class="card">
-      <h3>High UNC</h3>
-      <p>99% UNC</p>
-    </div>
+    <div class="card"><h3>Paid</h3><p>Premium access with all features unlocked.</p></div>
+    <div class="card"><h3>100% Safe</h3><p>No malware or unwanted code.</p></div>
+    <div class="card"><h3>High UNC</h3><p>99% UNC.</p></div>
   </section>
 
   <!-- ABOUT -->
   <section class="about">
     <h2>Why choose WeAreFSL?</h2>
-    <p>
-      WeAreFSL is designed for simplicity, safety and maximum performance.  
-      Our executor is constantly updated, optimized for stability, and tested to ensure the best user experience possible.
-    </p>
+    <p>WeAreFSL is designed for simplicity, safety and maximum performance.</p>
   </section>
 
   <!-- DISCORD COMMUNITY -->
@@ -208,20 +224,25 @@
     <div class="members" id="members"></div>
   </section>
 
+  <!-- SETTINGS PANEL -->
+  <div class="settings-panel" id="settingsPanel">
+    <h2>Settings</h2>
+    <p>Select Cursor Style:</p>
+    <label><input type="radio" name="cursor" value="glow" checked> Glow</label>
+    <label><input type="radio" name="cursor" value="crosshair"> Crosshair</label>
+    <label><input type="radio" name="cursor" value="circle"> Neon Circle</label>
+  </div>
+
   <!-- FOOTER -->
-  <footer>
-    © 2025 WeAreFSL. All rights reserved.
-  </footer>
+  <footer>© 2025 WeAreFSL. All rights reserved.</footer>
 
   <script>
     // Cursor logic
     const cursor = document.getElementById("cursor");
-    let cursorX = 0, cursorY = 0;
-    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0, mouseX = 0, mouseY = 0;
 
     document.addEventListener("mousemove", e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      mouseX = e.clientX; mouseY = e.clientY;
     });
 
     function animateCursor() {
@@ -246,7 +267,19 @@
       }
     });
 
-    // Smooth scroll with animation to community
+    // Typing effect
+    const text = "Good executor for Roblox, easy to use and fast.";
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        document.getElementById("typing").textContent += text.charAt(i);
+        i++;
+        setTimeout(typing, 50);
+      }
+    }
+    typing();
+
+    // Smooth scroll + animation
     document.querySelectorAll("a.scroll").forEach(link => {
       link.addEventListener("click", e => {
         e.preventDefault();
@@ -262,19 +295,32 @@
       .then(data => {
         const membersDiv = document.getElementById("members");
         if (data && data.members) {
-          data.members.forEach(m => {
+          data.members.forEach((m, idx) => {
             const el = document.createElement("div");
             el.className = "member";
+            el.style.animationDelay = `${idx * 0.1}s`;
             el.innerHTML = `<img src="${m.avatar_url}" alt=""><span>${m.username}</span>`;
             membersDiv.appendChild(el);
           });
         } else {
           membersDiv.innerHTML = "<p>Widget is disabled. Enable it in Discord server settings.</p>";
         }
-      })
-      .catch(() => {
-        document.getElementById("members").innerHTML = "<p>Could not load members.</p>";
       });
+
+    // Settings panel
+    const settingsBtn = document.getElementById("settingsBtn");
+    const settingsPanel = document.getElementById("settingsPanel");
+
+    settingsBtn.addEventListener("click", e => {
+      e.preventDefault();
+      settingsPanel.style.display = settingsPanel.style.display === "block" ? "none" : "block";
+    });
+
+    document.querySelectorAll("input[name='cursor']").forEach(radio => {
+      radio.addEventListener("change", e => {
+        cursor.className = "cursor " + e.target.value;
+      });
+    });
   </script>
 </body>
 </html>
