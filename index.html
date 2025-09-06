@@ -9,12 +9,29 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      cursor: none; /* Ukrywamy normalny kursor */
     }
     body {
       font-family: Arial, sans-serif;
       background: #0d0d0d;
       color: #fff;
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 25px;
+      border: 2px solid #00ffff;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+      z-index: 9999;
     }
 
     /* HEADER */
@@ -153,11 +170,15 @@
   </style>
 </head>
 <body>
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+
   <!-- HEADER -->
   <header>
     <h1>WeAreFSL</h1>
     <nav>
       <a href="https://discord.gg/xJdYjyNHZB" target="_blank">Download</a>
+      <a href="#community">Community</a>
       <a href="https://pastebin.com/raw/SExHMhyU" target="_blank">Contacts</a>
     </nav>
   </header>
@@ -195,10 +216,9 @@
   </section>
 
   <!-- DISCORD WIDGET -->
-  <section class="discord">
+  <section class="discord" id="community">
     <h2>Community</h2>
     <p>See who is online on our Discord server:</p>
-    <!-- Replace ID with your Discord server ID -->
     <iframe src="https://discord.com/widget?id=1407757559292755988&theme=dark" width="350" height="500" allowtransparency="true"></iframe>
   </section>
 
@@ -206,5 +226,14 @@
   <footer>
     © 2025 WeAreFSL. All rights reserved.
   </footer>
+
+  <script>
+    // Custom cursor logic
+    const cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", e => {
+      cursor.style.top = e.clientY + "px";
+      cursor.style.left = e.clientX + "px";
+    });
+  </script>
 </body>
 </html>
