@@ -1,57 +1,126 @@
-/* 1. Reset + fonts */
+/* Reset + fonts */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Orbitron', sans-serif; overflow: hidden; background: #0a0a0a; }
+body { font-family: 'Orbitron', sans-serif; background: #0a0a0a; overflow: hidden; color: #fff; }
 
-/* 2. Animated gradient background */
+/* Background gradient animated */
 .overlay {
   position: fixed; inset: 0;
-  background: linear-gradient(270deg,#1a1a2e,#16213e,#0f3460,#533483);
-  background-size: 800% 800%;
-  animation: gradient 15s ease infinite;
+  background: linear-gradient(270deg,#0a0a0a,#1a1a1a,#0f0f0f);
+  background-size: 600% 600%;
+  animation: gradient 20s ease infinite;
   z-index: -2;
 }
-@keyframes gradient { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+@keyframes gradient {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
 
-/* 3. Logo neon */
+/* Logo glitch neon */
 .logo {
   font-size: 3rem;
+  margin-bottom: 1rem;
   color: #fff;
   text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-  animation: flicker 2s infinite;
+  position: relative;
 }
 .logo span { color: #ff00ff; }
-@keyframes flicker {
-  0%,19%,21%,23%,25%,54%,56%,100% { opacity: 1; }
-  20%,24%,55% { opacity: 0.5; }
+
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  text-shadow: -2px 0 red;
+  top: 0;
+  color: white;
+  background: transparent;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+}
+.glitch::after {
+  text-shadow: -2px 0 blue;
+  animation: glitch 2s infinite linear alternate-reverse;
+}
+@keyframes glitch {
+  0% { clip: rect(42px,9999px,44px,0); }
+  20% { clip: rect(12px,9999px,14px,0); }
+  40% { clip: rect(52px,9999px,54px,0); }
+  60% { clip: rect(32px,9999px,34px,0); }
+  80% { clip: rect(72px,9999px,74px,0); }
+  100% { clip: rect(22px,9999px,24px,0); }
 }
 
-/* 4. Button glow */
-.btn-glow {
-  display: inline-block;
-  margin-top: 2rem;
-  padding: 1rem 2.5rem;
-  border-radius: 999px;
+/* Subtitle typing effect */
+.typing {
   font-size: 1.2rem;
+  color: #bbb;
+  border-right: 2px solid #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing 5s steps(40, end) forwards, blink 1s step-end infinite;
+}
+@keyframes typing { to { width: 100%; } }
+@keyframes blink { 50% { border-color: transparent; } }
+
+/* Buttons */
+.buttons {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+.btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  background: #1a1a1a;
+  border: 1px solid #333;
   color: #fff;
-  background: linear-gradient(90deg,#00f,#0ff);
-  box-shadow: 0 0 20px #0ff, 0 0 40px #00f;
+  text-decoration: none;
+  font-size: 1rem;
+  box-shadow: 0 0 10px #000;
   transition: all 0.3s ease;
 }
-.btn-glow:hover {
+.btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 30px #0ff, 0 0 60px #00f, inset 0 0 20px #fff;
+  background: #2a2a2a;
+  box-shadow: 0 0 20px #0ff, 0 0 30px #00f;
+}
+.btn i { margin-right: 0.5rem; }
+
+/* Main button special */
+.btn.main {
+  margin-top: 1.5rem;
+  background: linear-gradient(90deg,#00f,#0ff);
+  box-shadow: 0 0 25px #0ff, 0 0 50px #00f;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.btn.main:hover {
+  background: linear-gradient(90deg,#ff00ff,#0ff);
+  box-shadow: 0 0 40px #ff00ff, 0 0 80px #0ff;
 }
 
-/* 5. Subtitle glow */
-.subtitle {
-  margin-top: 1rem;
-  font-size: 1rem;
-  color: #ddd;
-  text-shadow: 0 0 5px #fff, 0 0 10px #0ff;
-}
-
-/* 6. Fade-in animation */
+/* Fade-in animation */
 .fade-in { animation: fade 2s ease forwards; opacity: 0; }
 @keyframes fade { to { opacity: 1; } }
 
-.container { text-align: center; position: relative; z-index: 2; top: 35vh; }
+.container {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  top: 20vh;
+}
+
+/* Custom cursor */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 20px; height: 20px;
+  border: 2px solid #0ff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+}
