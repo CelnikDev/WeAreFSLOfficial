@@ -1,4 +1,4 @@
-// Particles background
+// Particles
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -31,17 +31,18 @@ function drawParticles() {
 }
 drawParticles();
 
-// Resize canvas
+// Resize fix
 window.addEventListener("resize", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
 
-// Parallax effect
+// Parallax
 document.addEventListener("mousemove", e => {
   const moveX = (e.clientX - window.innerWidth / 2) / 50;
   const moveY = (e.clientY - window.innerHeight / 2) / 50;
-  document.querySelector(".container").style.transform = `translate(${moveX}px,${moveY}px)`;
+  document.querySelector(".container").style.transform =
+    `translate(${moveX}px,${moveY}px)`;
 });
 
 // Custom cursor
@@ -52,7 +53,7 @@ document.addEventListener("mousemove", e => {
   cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
 });
 
-// Button click animation
+// Button click effect
 document.querySelectorAll(".btn").forEach(btn => {
   btn.addEventListener("click", () => {
     btn.style.transform = "scale(0.9)";
