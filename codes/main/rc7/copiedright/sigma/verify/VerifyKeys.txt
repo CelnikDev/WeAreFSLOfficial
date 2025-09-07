@@ -1,2 +1,1 @@
---|approved|pending|revoked
 CC9902EB1C964E2D|revoked
