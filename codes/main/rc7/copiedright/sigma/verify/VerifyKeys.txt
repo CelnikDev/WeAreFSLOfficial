@@ -1,2 +1,2 @@
 --status | approved | revoked | pending
-A2B16027872F4401 | approved
+A2B16027872F4401|approved
