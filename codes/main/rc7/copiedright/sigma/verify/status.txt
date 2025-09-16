@@ -1,1 +1,2 @@
 --|approved|pending|revoked
+KEY|STATUS|OWNER_UUID|OWNER_CPU
