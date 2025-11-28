@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WeAreFSL — Landing</title>
-  <!-- Add Google Fonts for Inter to ensure consistency -->
+  <!-- Google Fonts for Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -14,9 +14,9 @@
     html, body { height: 100%; }
     body {
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      background: linear-gradient(-45deg, #0b0b0b, #0f0f10, #070707, #111111);
-      background-size: 400% 400%;
-      animation: bgMove 14s ease infinite;
+      background: linear-gradient(-45deg, #0b0b0b, #001f1f, #0f0f10, #070707, #111111, #1a002a, #0b0b0b);
+      background-size: 600% 600%;
+      animation: bgMove 20s ease infinite;
       color: #eaeaea;
       -webkit-font-smoothing: antialiased;
       overflow-y: auto;
@@ -27,7 +27,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* PAGE LOADER (session-based) */
+    /* PAGE LOADER */
     #pageLoader {
       position: fixed; inset: 0;
       display: flex; align-items: center; justify-content: center;
@@ -42,7 +42,7 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* CUSTOM CURSOR (outer follows pointer; inner dot static styling) */
+    /* CUSTOM CURSOR */
     #cursor {
       position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
       pointer-events: none; z-index: 4000;
@@ -53,8 +53,15 @@
     }
     .cursor-dot.glow {
       width: 22px; height: 22px; border-radius: 50%;
-      border: 2px solid #00f0e0; box-shadow: 0 0 12px #00f0e0, 0 0 30px #00f0e0aa;
+      border: 2px solid; color: #00f0e0; /* Initial color */
+      box-shadow: 0 0 12px currentColor, 0 0 30px rgba(currentColor, 0.67);
       background: transparent;
+      animation: gradientBorder 5s ease infinite;
+    }
+    @keyframes gradientBorder {
+      0% { color: #00f0e0; }
+      50% { color: #7b6bff; }
+      100% { color: #00f0e0; }
     }
     .cursor-dot.crosshair { width: 34px; height: 34px; }
     .cursor-dot.crosshair:before, .cursor-dot.crosshair:after {
@@ -77,13 +84,15 @@
     }
     @keyframes pulse { from { transform: scale(0.95); } to { transform: scale(1.15); } }
 
-    /* HEADER: slight colored tabs + YouTube icon */
+    /* HEADER */
     header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 18px 36px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
       backdrop-filter: blur(6px); position: sticky; top: 0; z-index: 200;
     }
-    .brand { font-weight: 700; letter-spacing: 0.6px; color: #fff; }
+    .brand { display: flex; align-items: center; gap: 8px; }
+    .brand-logo { height: 40px; width: auto; }
+    .brand-text { font-weight: 700; letter-spacing: 0.6px; color: #fff; }
     nav { display: flex; gap: 10px; align-items: center; }
     nav a {
       color: #cfd8dc; text-decoration: none; padding: 8px 12px; border-radius: 9px;
@@ -100,30 +109,57 @@
 
     .container { max-width: 1100px; margin: 0 auto; padding: 28px; }
 
-    /* HERO */
+    /* HERO with improved animations */
     .hero {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 84px 16px;
+      text-align: center; padding: 84px 16px; opacity: 0; transform: translateY(30px);
+      animation: fadeInUp 1s ease forwards 0.5s;
     }
-    .title { font-size: 44px; font-weight: 800; letter-spacing: -1px; color: #f5f7f8; text-shadow: 0 6px 30px rgba(0,0,0,0.6); }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .title {
+      font-size: 44px; font-weight: 800; letter-spacing: -1px;
+      background: linear-gradient(90deg, #00f0e0, #7b6bff, #00f0e0);
+      background-size: 200% 100%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: gradientText 5s ease infinite;
+      text-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    }
+    @keyframes gradientText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
     .subtitle { margin-top: 12px; color: #b9c3c6; font-size: 15px; max-width: 820px; }
     .cta {
       margin-top: 22px; display: inline-flex; align-items: center; gap: 12px;
       padding: 12px 26px; border-radius: 999px;
       background: linear-gradient(90deg, #00f0e0, #7b6bff); color: #071217; font-weight: 800;
-      box-shadow: 0 8px 40px rgba(123,107,255,0.12); text-decoration: none; transition: transform 0.18s;
+      box-shadow: 0 8px 40px rgba(123,107,255,0.12); text-decoration: none;
+      transition: transform 0.18s, box-shadow 0.18s;
+      animation: pulseCta 2s infinite;
+    }
+    @keyframes pulseCta {
+      0% { box-shadow: 0 8px 40px rgba(123,107,255,0.12); }
+      50% { box-shadow: 0 12px 60px rgba(123,107,255,0.2); }
+      100% { box-shadow: 0 8px 40px rgba(123,107,255,0.12); }
     }
     .cta:hover { transform: translateY(-3px) scale(1.02); }
 
-    /* FEATURES (cards) - NO translation shift on hover, only glow */
-    .features { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 36px 0; }
+    /* FEATURES with fade-in */
+    .features {
+      display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 36px 0;
+      opacity: 0; animation: fadeInUp 1s ease forwards 1s;
+    }
     .card {
       position: relative;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       padding: 22px; border-radius: 12px; width: 260px;
-      box-shadow: 0 6px 30px rgba(0,0,0,0.6); transition: box-shadow 0.18s;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6); transition: box-shadow 0.18s, transform 0.18s;
       overflow: visible; z-index: 0;
     }
+    .card:hover { transform: scale(1.05); box-shadow: 0 12px 50px rgba(0,240,224,0.06); }
     .card h3 { font-size: 18px; margin-bottom: 8px; }
     .card p { color: #a9b0b4; font-size: 14px; }
     .card .tooltip {
@@ -133,7 +169,6 @@
       transition: opacity 0.12s, transform 0.12s; z-index: 2;
     }
     .card.hovered .tooltip { opacity: 1; transform: translateX(-50%) translateY(-12px); }
-    /* Glow only: ::before draws radial gradient at --glow-pos; opacity controlled by --glow-opacity */
     .card::before {
       content: ""; position: absolute; inset: 0; border-radius: 12px;
       pointer-events: none; z-index: 0; opacity: var(--glow-visible, 0);
@@ -173,7 +208,6 @@
       border-radius: 10px; overflow: hidden; border: 0;
       box-shadow: 0 12px 40px rgba(0,0,0,0.6);
     }
-    /* pulse highlight that runs when nav clicked */
     .community.pulse-highlight { animation: pulseGlow 1s ease; }
     @keyframes pulseGlow {
       0% { box-shadow: 0 0 0 rgba(0,240,224,0); }
@@ -200,6 +234,28 @@
     .fade-in-up { opacity: 0; transform: translateY(10px); animation: enterUp 0.6s forwards; }
     @keyframes enterUp { to { opacity: 1; transform: translateY(0); } }
 
+    /* NEW: Latest Videos Section */
+    .videos {
+      padding: 40px 16px; background: linear-gradient(180deg, transparent, rgba(255,255,255,0.01));
+      opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .videos.visible { opacity: 1; transform: translateY(0); }
+    .videos-inner { max-width: 900px; margin: 0 auto; }
+    .videos-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .videos-head h2 { font-size: 20px; }
+    .video-list { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; justify-content: center; }
+    .video-card {
+      position: relative; width: 260px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding: 0; border-radius: 12px; box-shadow: 0 6px 30px rgba(0,0,0,0.6); transition: transform 0.18s;
+      overflow: hidden;
+    }
+    .video-card:hover { transform: scale(1.05); }
+    .video-thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; /* 16:9 aspect ratio */ }
+    .video-thumbnail { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px 12px 0 0; }
+    .video-info { padding: 12px; }
+    .video-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .video-meta { color: #a9b0b4; font-size: 13px; }
+
     @media (max-width: 800px) {
       .title { font-size: 32px; }
       .features { gap: 12px; }
@@ -207,9 +263,10 @@
       header { padding: 14px; }
       .spacer { height: 160px; }
       .iframe-wrap iframe { width: 100%; height: 420px; }
+      .video-card { width: 100%; }
     }
 
-    /* Improvements: Disable custom cursor on touch devices for better UX */
+    /* Disable custom cursor on touch */
     @media (pointer: coarse) {
       * { cursor: default !important; }
       #cursor { display: none; }
@@ -230,7 +287,10 @@
     </div>
   </div>
   <header>
-    <div class="brand">WeAreFSL</div>
+    <div class="brand">
+      <img src="https://cdn.discordapp.com/attachments/1444073056795492442/1444081129031336077/LogoOriginal.png?ex=692b68da&is=692a175a&hm=e86d3ca81bb4955d05bc936e8ee7c323b8eda3d0b7ab8a85b6bd6a0a2d1c3b39&" alt="WeAreFSL Logo" class="brand-logo">
+      <span class="brand-text">WeAreFSL</span>
+    </div>
     <nav>
       <a href="https://discord.gg/xJdYjyNHZB" target="_blank" rel="noopener noreferrer">Download</a>
       <a href="#community" id="navCommunity">Community</a>
@@ -278,6 +338,14 @@
         </div>
       </div>
     </section>
+    <section id="videos" class="videos" aria-labelledby="videosTitle">
+      <div class="videos-inner">
+        <div class="videos-head">
+          <h2 id="videosTitle">Latest Videos</h2>
+        </div>
+        <div class="video-list" id="videoList"></div>
+      </div>
+    </section>
     <footer style="margin-top:40px;padding:36px 0;text-align:center;color:#80999a">© 2025 WeAreFSL. All rights reserved.</footer>
   </main>
   <aside id="settingsPanel" class="settings-panel" aria-hidden="true">
@@ -317,7 +385,7 @@
     animateCursor();
 
     // Slight cursor scaling on hover (no glow change)
-    const interactiveSelectors = ['a', 'button', '.card', '.small-btn', '.cta'];
+    const interactiveSelectors = ['a', 'button', '.card', '.small-btn', '.cta', '.video-card'];
     function bindHoverScale() {
       document.querySelectorAll(interactiveSelectors.join(',')).forEach(el => {
         el.addEventListener('mouseenter', () => cursorDot.style.transform = 'translate(-50%, -50%) scale(1.06)', { passive: true });
@@ -484,6 +552,47 @@
         setTimeout(() => discordIframe.setAttribute('src', src), 140);
       });
     }
+
+    // IntersectionObserver for videos reveal
+    const videosSection = document.getElementById('videos');
+    const ioVideos = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          videosSection.classList.add('visible');
+          ioVideos.unobserve(videosSection);
+        }
+      });
+    }, { threshold: 0.12 });
+    if (videosSection) ioVideos.observe(videosSection);
+
+    // Fetch latest videos dynamically
+    const videoList = document.getElementById('videoList');
+    const channelID = 'UCLZKGoxcejywThM8nh6GHYQ';
+    fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + channelID)}`)
+      .then(response => response.json())
+      .then(data => {
+        const items = data.items.slice(0, 4); // Get up to 4 latest videos
+        items.forEach(item => {
+          const videoId = item.guid.replace('yt:video:', '');
+          const card = document.createElement('a');
+          card.href = item.link;
+          card.target = '_blank';
+          card.rel = 'noopener noreferrer';
+          card.className = 'video-card';
+          card.innerHTML = `
+            <div class="video-thumbnail-container">
+              <img src="${item.thumbnail}" alt="${item.title}" class="video-thumbnail">
+            </div>
+            <div class="video-info">
+              <div class="video-title">${item.title}</div>
+              <div class="video-meta">Published: ${new Date(item.pubDate).toLocaleDateString()} • Views: N/A</div>
+            </div>
+          `;
+          videoList.appendChild(card);
+        });
+        bindHoverScale(); // Rebind hover for new elements
+      })
+      .catch(console.error);
 
     // ESC closes settings
     document.addEventListener('keydown', e => {
